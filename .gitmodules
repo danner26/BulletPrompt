@@ -1,0 +1,4 @@
+[submodule "tests"]
+	path = tests
+	url = https://github.com/danner26/BulletPrompt
+	branch = master/tests
