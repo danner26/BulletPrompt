@@ -1,8 +1,13 @@
 name: Upload Python Package to PyPI when a Release is Created
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      pypi:
+        type: boolean
+        description: Publish to PyPI
 
 jobs:
   check:
