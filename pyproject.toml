@@ -1,2 +1,38 @@
+# Project settings -----------------------------------------------------------------------------------------------------
+[project]
+name = "BulletPrompt"
+dynamic = ["version"]
+description = "Interactive prompts made simple. Maintained version of Bullet."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { "text" = "MIT" }
+keywords = ["prompts", "pypi-package", "python3", "bullet", "BulletPrompt"]
+authors = [
+    { name = "Daniel Anner", email = "daniel.anner@danstechsupport.com" },
+    { name = "Greg Walsh", email = "greg.walsh@danstechsupport.com" },
+]
+maintainers = [
+    { name = "Dan's Tech Support LLC", email = "hello@danstechsupport.com" },
+]
+
+# Required dependencies ------------------------------------------------------------------------------------------------
+dependencies = []
+
+[project.urls]
+"Homepage" = "https://pypi.org/project/BulletPrompt/"
+"Source" = "https://github.com/danner26/BulletPrompt"
+"Documentation" = "https://github.com/danner26/BulletPrompt/blob/master/DOCUMENTATION.md"
+"Bug Reports" = "https://github.com/danner26/BulletPrompt/issues"
+"Changelog" = "https://github.com/danner26/BulletPrompt/releases"
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "pytest",
+    "pre-commit",
+    "uv",
+]
+
 [tool.ruff]
 exclude = [".git", ".vscode", ".pytest_cache", ".mypy_cache", ".env"]
+line-length = 120
