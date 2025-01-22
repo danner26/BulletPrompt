@@ -14,9 +14,6 @@ jobs:
     name: Check if Release is Ready to Publish
     if: github.repository == 'danner26/BulletPrompt' && github.actor == 'danner26'
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/project/BulletPrompt/
     permissions:
       contents: write
     outputs:
@@ -65,7 +62,7 @@ jobs:
         run: |
           git config --global user.name "Daniel W. Anner"
           git config --global user.email "daniel.anner@danstechsupport.com"
-          git tag -a "$CURRENT_TAG" -m "$(git log -1 --pretty=%B)"
+          git tag -s "$CURRENT_TAG" -m "$(git log -1 --pretty=%B)"
           git push origin "$CURRENT_TAG"
 
   publish:
@@ -73,7 +70,7 @@ jobs:
     if: needs.check.outputs.increment == 'True'
     runs-on: ubuntu-latest
     environment: # for GitHub Deployments tab
-      name: Release - PyPI
+      name: pypi
       url: https://pypi.org/p/BulletPrompt/
     permissions:
       id-token: write # for PyPI trusted publishing
@@ -93,5 +90,5 @@ jobs:
       - name: Build package
         run: |
           python3 setup.py sdist bdist_wheel
-      - name: Publish package distributions to PyPI
+      - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
