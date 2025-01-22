@@ -35,41 +35,23 @@ def mygetc():
 def getchar():
     """Character input parser."""
     c = mygetc()
-    if (
-        ord(c) == LINE_BEGIN_KEY  # noqa: F405
-        or ord(c) == LINE_END_KEY  # noqa: F405
-        or ord(c) == TAB_KEY  # noqa: F405
-        or ord(c) == INTERRUPT_KEY  # noqa: F405
-        or ord(c) == NEWLINE_KEY  # noqa: F405
-    ):
+    if ord(c) in {LINE_BEGIN_KEY, LINE_END_KEY, TAB_KEY, INTERRUPT_KEY, NEWLINE_KEY, BACK_SPACE_KEY}:  # noqa: F405
         return c
 
-    elif ord(c) == BACK_SPACE_KEY:  # noqa: F405
-        return c
-
-    elif ord(c) == ESC_KEY:  # noqa: F405
+    if ord(c) == ESC_KEY:  # noqa: F405
         combo = mygetc()
         if ord(combo) == MOD_KEY_INT:  # noqa: F405
             key = mygetc()
-            if ord(key) >= MOD_KEY_BEGIN - MOD_KEY_FLAG and ord(key) <= MOD_KEY_END - MOD_KEY_FLAG:  # noqa: F405
+            if MOD_KEY_BEGIN - MOD_KEY_FLAG <= ord(key) <= MOD_KEY_END - MOD_KEY_FLAG:  # noqa: F405
                 if ord(mygetc()) == MOD_KEY_DUMMY:  # noqa: F405
                     return chr(ord(key) + MOD_KEY_FLAG)  # noqa: F405
-                else:
-                    return UNDEFINED_KEY  # noqa: F405
-            elif ord(key) >= ARROW_KEY_BEGIN - ARROW_KEY_FLAG and ord(key) <= ARROW_KEY_END - ARROW_KEY_FLAG:  # noqa: F405
-                return chr(ord(key) + ARROW_KEY_FLAG)  # noqa: F405
-            else:
                 return UNDEFINED_KEY  # noqa: F405
-        else:
-            return getchar()
-
-    else:
-        if is_printable(c):
-            return c
-        else:
+            if ARROW_KEY_BEGIN - ARROW_KEY_FLAG <= ord(key) <= ARROW_KEY_END - ARROW_KEY_FLAG:  # noqa: F405
+                return chr(ord(key) + ARROW_KEY_FLAG)  # noqa: F405
             return UNDEFINED_KEY  # noqa: F405
+        return getchar()
 
-    return UNDEFINED_KEY  # noqa: F405
+    return c if is_printable(c) else UNDEFINED_KEY  # noqa: F405
 
 
 # Basic command line functions
