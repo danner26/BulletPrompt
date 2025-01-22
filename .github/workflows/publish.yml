@@ -57,6 +57,9 @@ jobs:
         if: steps.check_pypi.outputs.increment == 'True'
         run: |
           echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
+          gpg --list-keys --with-colons | grep "^pub" | cut -d: -f5 | head -n1 > gpg_key_id
+          GPG_KEY_ID=$(cat gpg_key_id)
+          echo "GPG_KEY_ID=$GPG_KEY_ID" >> $GITHUB_ENV
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       - name: Tag and Release
@@ -68,6 +71,7 @@ jobs:
         run: |
           git config --global user.name "Daniel W. Anner"
           git config --global user.email "daniel.anner@danstechsupport.com"
+          git config --global user.signingkey $GPG_KEY_ID
           git tag -s "$CURRENT_TAG" -m "$(git log -1 --pretty=%B)"
           git push origin "$CURRENT_TAG"
 
