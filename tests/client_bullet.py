@@ -263,9 +263,12 @@ def test_bullet_launch():
     """
     bullet = Bullet(choices=["Option 1", "Option 2"])
 
-    with patch("bullet.utils.forceWrite") as mock_forceWrite, patch(
-        "bullet.utils.moveCursorUp"
-    ) as mock_moveCursorUp, patch("bullet.client.Bullet.handle_input", return_value="Option 1"):
+    # fmt: off
+    with patch("bullet.utils.forceWrite") as mock_forceWrite, \
+        patch("bullet.utils.moveCursorUp") as mock_moveCursorUp, \
+        patch("bullet.client.Bullet.handle_input", return_value="Option 1"):
+    # fmt: on
+
         result = bullet.launch()
 
         assert result == "Option 1"
