@@ -36,3 +36,10 @@ dev = [
 [tool.ruff]
 exclude = [".git", ".vscode", ".pytest_cache", ".mypy_cache", ".env"]
 line-length = 120
+
+[tool.setuptools]  # configuration specific to the `setuptools` build backend.
+packages = { find = { where = ["."], include = ["bullet", "bullet.*"] } }
+package-data = { "bullet" = ["**/*.yaml", "../tests/*.py"], "bullet.assets" = ["*.png", "*.gif"] }
+
+[tool.setuptools.dynamic]
+version = { attr = "bullet.__version__" }
