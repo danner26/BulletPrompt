@@ -86,19 +86,10 @@ jobs:
         id: setup_python
         with:
           python-version: "3.12"
-      - name: cache virtualenv
-        uses: actions/cache@v4
-        id: cache-venv-publish
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ env.pythonLocation }}-publish-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ env.pythonLocation }}-publish-
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           pip3 install setuptools wheel
-        if: steps.cache-venv-publish.outputs.cache-hit != 'true'
       - name: Build package
         run: |
           python3 setup.py sdist bdist_wheel
