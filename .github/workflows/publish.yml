@@ -25,14 +25,26 @@ jobs:
       previous_tag: ${{ steps.check_pypi.outputs.previous_tag }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Set up Python
         uses: actions/setup-python@v5
+        id: setup_python
         with:
-          python-version: "3.x"
+          python-version: "3.12"
+      - name: cache virtualenv
+        uses: actions/cache@v4
+        id: cache-venv-publish
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ env.pythonLocation }}-publish-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ env.pythonLocation }}-publish-
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           pip3 install setuptools wheel ultralytics-actions
+        if: steps.cache-venv-publish.outputs.cache-hit != 'true'
       - id: check_pypi
         shell: python3 -u {0}
         run: |
@@ -67,14 +79,26 @@ jobs:
       id-token: write # for PyPI trusted publishing
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Set up Python
         uses: actions/setup-python@v5
+        id: setup_python
         with:
-          python-version: "3.x"
+          python-version: "3.12"
+      - name: cache virtualenv
+        uses: actions/cache@v4
+        id: cache-venv-publish
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ env.pythonLocation }}-publish-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ env.pythonLocation }}-publish-
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           pip3 install setuptools wheel
+        if: steps.cache-venv-publish.outputs.cache-hit != 'true'
       - name: Build package
         run: |
           python3 setup.py sdist bdist_wheel
