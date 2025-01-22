@@ -1,3 +1,5 @@
+__version__ = "2.2.2"
+
 from .client import Bullet  # noqa: F401
 from .client import Check  # noqa: F401
 from .client import YesNo  # noqa: F401
