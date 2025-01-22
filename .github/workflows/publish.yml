@@ -32,10 +32,9 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          pip3 install setuptools wheel
-          pip3 install --no-cache-dir ultralytics-actions
+          pip3 install setuptools wheel ultralytics-actions
       - id: check_pypi
-        shell: python
+        shell: python3 -u {0}
         run: |
           import os
           from actions.utils import check_pypi_version
