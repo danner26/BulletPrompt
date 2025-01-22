@@ -53,6 +53,12 @@ jobs:
           os.system(f'echo "previous_tag=v{online_version}" >> $GITHUB_OUTPUT')
           if publish:
               print('Ready to publish new version to PyPI ✅.')
+      - name: Configure GPG Key
+        if: steps.check_pypi.outputs.increment == 'True'
+        run: |
+          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
+        env:
+          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       - name: Tag and Release
         if: steps.check_pypi.outputs.increment == 'True'
         env:
