@@ -30,6 +30,7 @@ dev = [
     "ruff",
     "pytest",
     "pre-commit",
+    "pytest-mock",
     "uv",
 ]
 
