@@ -265,9 +265,9 @@ def test_bullet_launch():
 
     # fmt: off
     with patch("bullet.utils.forceWrite") as mock_forceWrite, \
-        patch("bullet.utils.moveCursorUp") as mock_moveCursorUp, \
-        patch("bullet.client.Bullet.handle_input", return_value="Option 1"):
-    # fmt: on
+         patch("bullet.utils.moveCursorUp") as mock_moveCursorUp, \
+         patch("bullet.client.Bullet.handle_input", return_value="Option 1"):
+         # fmt: on
 
         result = bullet.launch()
 

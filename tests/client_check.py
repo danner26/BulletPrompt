@@ -295,7 +295,7 @@ def test_check_launch(mocker):
     with patch("bullet.utils.forceWrite") as mock_forceWrite, \
          patch("bullet.utils.moveCursorUp") as mock_moveCursorUp, \
          patch("bullet.client.Check.handle_input", return_value=["Option 1"]):
-    # fmt: on
+         # fmt: on
 
         result = check.launch()
 
