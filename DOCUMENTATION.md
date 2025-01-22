@@ -54,7 +54,7 @@ cli = Check(check = "√")
 cli = Password(hidden = "*")
 cli = ScrollBar(pointer = "→")
 ```
-> You can also use emojis! 
+> You can also use emojis!
 
 ## Customize Colors<a name="topic_4"></a>
 > It is recommended to EXPLICITLY specify ALL colors for an UI object.
@@ -114,13 +114,13 @@ client = Bullet(**styles.Greece)
 ## ⌨️ Using `Bullet` Object<a name="topic_7"></a>
 > Single-choice prompt.
 - Define `bullet` when initializing `Bullet` object.
-- Move current position up and down using **arrow keys**. 
+- Move current position up and down using **arrow keys**.
 - Returns the chosen item after pressing **enter**.
 
 ## ⌨️ Using `Check` Object<a name="topic_8"></a>
 > Multiple-choice prompt.
 - Define `check` when initializing `Check` object.
-- Move current position up and down using **arrow keys**. 
+- Move current position up and down using **arrow keys**.
 - Check/Un-check an item by pressing **space**.
 - Returns the a list of chosen items after pressing **enter**.
 
@@ -135,7 +135,7 @@ client = Bullet(**styles.Greece)
 - Only enter `y/Y` or `n/N`. Other invalid inputs will be guarded, and the user will be asked to re-enter.
 
 ## ⌨️ Using `Password` Object<a name="topic_11"></a>
-> Enter passwords. 
+> Enter passwords.
 - Define `hidden` when initializing `Password` object. This would be the character shown on the terminal when passwords are entered.
 - In convention, space characters `' '` are guarded and should not be in a password.
 
@@ -199,19 +199,19 @@ Note that `accept()` is the method for **all** prompts to return user input. The
 ## A List of Default Keyboard Events<a name="topic_18"></a>
 > See `./bullet/charDef.py`
 - `LINE_BEGIN_KEY` : Ctrl + H
-- `LINE_END_KEY`: Ctrl + E 
-- `TAB_KEY`         
+- `LINE_END_KEY`: Ctrl + E
+- `TAB_KEY`
 - `NEWLINE_KEY`: Enter
-- `ESC_KEY`         
-- `BACK_SPACE_KEY` 
-- `ARROW_UP_KEY`    
-- `ARROW_DOWN_KEY`  
-- `ARROW_RIGHT_KEY`  
-- `ARROW_LEFT_KEY` 
-- `INSERT_KEY`     
-- `DELETE_KEY`   
-- `END_KEY`         
-- `PG_UP_KEY`      
-- `PG_DOWN_KEY`    
+- `ESC_KEY`
+- `BACK_SPACE_KEY`
+- `ARROW_UP_KEY`
+- `ARROW_DOWN_KEY`
+- `ARROW_RIGHT_KEY`
+- `ARROW_LEFT_KEY`
+- `INSERT_KEY`
+- `DELETE_KEY`
+- `END_KEY`
+- `PG_UP_KEY`
+- `PG_DOWN_KEY`
 - `SPACE_CHAR`
 - `INTERRUPT_KEY`: Ctrl + C

@@ -1,9 +1,8 @@
-import os
 import sys
-import tty, termios
-import string
+import tty
+import termios
 import shutil
-from .charDef import *
+from .charDef import *  # noqa: F403
 from . import colors
 
 COLUMNS, _ = shutil.get_terminal_size()  ## Size of console
@@ -37,36 +36,30 @@ def getchar():
     """Character input parser."""
     c = mygetc()
     if (
-        ord(c) == LINE_BEGIN_KEY
-        or ord(c) == LINE_END_KEY
-        or ord(c) == TAB_KEY
-        or ord(c) == INTERRUPT_KEY
-        or ord(c) == NEWLINE_KEY
+        ord(c) == LINE_BEGIN_KEY  # noqa: F405
+        or ord(c) == LINE_END_KEY  # noqa: F405
+        or ord(c) == TAB_KEY  # noqa: F405
+        or ord(c) == INTERRUPT_KEY  # noqa: F405
+        or ord(c) == NEWLINE_KEY  # noqa: F405
     ):
         return c
 
-    elif ord(c) == BACK_SPACE_KEY:
+    elif ord(c) == BACK_SPACE_KEY:  # noqa: F405
         return c
 
-    elif ord(c) == ESC_KEY:
+    elif ord(c) == ESC_KEY:  # noqa: F405
         combo = mygetc()
-        if ord(combo) == MOD_KEY_INT:
+        if ord(combo) == MOD_KEY_INT:  # noqa: F405
             key = mygetc()
-            if (
-                ord(key) >= MOD_KEY_BEGIN - MOD_KEY_FLAG
-                and ord(key) <= MOD_KEY_END - MOD_KEY_FLAG
-            ):
-                if ord(mygetc()) == MOD_KEY_DUMMY:
-                    return chr(ord(key) + MOD_KEY_FLAG)
+            if ord(key) >= MOD_KEY_BEGIN - MOD_KEY_FLAG and ord(key) <= MOD_KEY_END - MOD_KEY_FLAG:  # noqa: F405
+                if ord(mygetc()) == MOD_KEY_DUMMY:  # noqa: F405
+                    return chr(ord(key) + MOD_KEY_FLAG)  # noqa: F405
                 else:
-                    return UNDEFINED_KEY
-            elif (
-                ord(key) >= ARROW_KEY_BEGIN - ARROW_KEY_FLAG
-                and ord(key) <= ARROW_KEY_END - ARROW_KEY_FLAG
-            ):
-                return chr(ord(key) + ARROW_KEY_FLAG)
+                    return UNDEFINED_KEY  # noqa: F405
+            elif ord(key) >= ARROW_KEY_BEGIN - ARROW_KEY_FLAG and ord(key) <= ARROW_KEY_END - ARROW_KEY_FLAG:  # noqa: F405
+                return chr(ord(key) + ARROW_KEY_FLAG)  # noqa: F405
             else:
-                return UNDEFINED_KEY
+                return UNDEFINED_KEY  # noqa: F405
         else:
             return getchar()
 
@@ -74,9 +67,9 @@ def getchar():
         if is_printable(c):
             return c
         else:
-            return UNDEFINED_KEY
+            return UNDEFINED_KEY  # noqa: F405
 
-    return UNDEFINED_KEY
+    return UNDEFINED_KEY  # noqa: F405
 
 
 # Basic command line functions

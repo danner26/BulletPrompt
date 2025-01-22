@@ -5,7 +5,6 @@ from contextlib import contextmanager
 # Show and hide cursors
 
 if os.name == "nt":
-    import msvcrt
     import ctypes
 
     class _CursorInfo(ctypes.Structure):

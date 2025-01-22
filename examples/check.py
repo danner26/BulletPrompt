@@ -16,11 +16,7 @@ class MinMaxCheck(Check):
             return super().accept()
 
     def valid(self):
-        return (
-            self.min_selections
-            <= sum(1 for c in self.checked if c)
-            <= self.max_selections
-        )
+        return self.min_selections <= sum(1 for c in self.checked if c) <= self.max_selections
 
 
 client = MinMaxCheck(

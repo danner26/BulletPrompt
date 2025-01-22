@@ -1,4 +1,3 @@
-from bullet import Bullet
 from bullet import Check
 from bullet import styles
 
