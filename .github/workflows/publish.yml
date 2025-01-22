@@ -5,19 +5,65 @@ on:
     types: [created]
 
 jobs:
-  pypi-publish:
-    name: Publish release to PyPI
+  check:
+    name: Check if Release is Ready to Publish
+    if: github.repository == 'danner26/BulletPrompt' && github.actor == 'danner26'
     runs-on: ubuntu-latest
     environment:
       name: pypi
       url: https://pypi.org/project/BulletPrompt/
     permissions:
-      id-token: write
-
+      contents: write
+    outputs:
+      increment: ${{ steps.check_pypi.outputs.increment }}
+      current_tag: ${{ steps.check_pypi.outputs.current_tag }}
+      previous_tag: ${{ steps.check_pypi.outputs.previous_tag }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install setuptools wheel
+      - id: check_pypi
+        shell: python
+        run: |
+          import os
+          from actions.utils import check_pypi_version
+          local_version, online_version, publish = check_pypi_version()
+          os.system(f'echo "increment={publish}" >> $GITHUB_OUTPUT')
+          os.system(f'echo "current_tag=v{local_version}" >> $GITHUB_OUTPUT')
+          os.system(f'echo "previous_tag=v{online_version}" >> $GITHUB_OUTPUT')
+          if publish:
+              print('Ready to publish new version to PyPI ✅.')
+      - name: Tag and Release
+        if: steps.check_pypi.outputs.increment == 'True'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURRENT_TAG: ${{ steps.check_pypi.outputs.current_tag }}
+          PREVIOUS_TAG: ${{ steps.check_pypi.outputs.previous_tag }}
+        run: |
+          git config --global user.name "Daniel W. Anner"
+          git config --global user.email "daniel.anner@danstechsupport.com"
+          git tag -a "$CURRENT_TAG" -m "$(git log -1 --pretty=%B)"
+          git push origin "$CURRENT_TAG"
+
+  publish:
+    needs: check
+    if: needs.check.outputs.increment == 'True'
+    runs-on: ubuntu-latest
+    environment: # for GitHub Deployments tab
+      name: Release - PyPI
+      url: https://pypi.org/p/BulletPrompt/
+    permissions:
+      id-token: write # for PyPI trusted publishing
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
       - name: Install dependencies
