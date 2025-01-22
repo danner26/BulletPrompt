@@ -120,7 +120,7 @@ def test_bullet_render_bullets(mocker):
     bullet = Bullet(choices=["Option 1", "Option 2"])
     mocker.patch("bullet.utils.forceWrite")
     bullet.renderBullets()
-    assert utils.forceWrite.call_count == 12
+    assert utils.forceWrite.call_count == len(bullet.choices) * 6  # forceWrite is called 6 times per choice
 
 
 def test_bullet_print_bullet(mocker):
@@ -272,5 +272,5 @@ def test_bullet_launch():
         result = bullet.launch()
 
         assert result == "Option 1"
-        assert mock_forceWrite.call_count == 12
+        assert mock_forceWrite.call_count == len(bullet.choices) * 6 # forceWrite is called 6 times per choice
         assert mock_moveCursorUp.call_count == 1

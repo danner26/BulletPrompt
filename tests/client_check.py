@@ -136,7 +136,7 @@ def test_check_render_rows(mocker):
     check = Check(choices=["Option 1", "Option 2"])
     mocker.patch("bullet.utils.forceWrite")
     check.renderRows()
-    assert utils.forceWrite.call_count == 12  # 2 choices * 2 calls per choice (row + newline)
+    assert utils.forceWrite.call_count == len(check.choices) * 6  # forceWrite is called 6 times per choice
 
 
 def test_check_print_row(mocker):
@@ -300,5 +300,5 @@ def test_check_launch(mocker):
         result = check.launch()
 
         assert result == ["Option 1"]
-        assert mock_forceWrite.call_count == 12
+        assert mock_forceWrite.call_count == len(check.choices) * 6 # forceWrite is called 6 times per choice
         assert mock_moveCursorUp.call_count == 1
